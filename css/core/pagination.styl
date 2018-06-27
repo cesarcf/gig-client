@@ -1,0 +1,164 @@
+//
+// Pagination (multiple pages)
+
+// CLASES EN HTML:
+// first << previous < page < current > page > next >> last
+//<div class="pagination">
+//		<span class="first">
+//			<a href=""></a>
+//		</span>
+//		<span class="previous">
+//			<a href=""></a>
+//		</span>
+//</div>
+
+// --------------------------------------------------
+
+$pagination-background-color =			#fff
+$pagination-border-color =				$gray-light
+
+$pagination-hover-background-color =	$gray-lighter
+
+$pagination-active-background-color =	$green;//$brand-hbl-green;//
+$pagination-active-color =				#fff
+
+$pagination-disabled-color =			$gray-light
+
+
+//
+// --------------------------------------------------
+////////////////////////////////////////////////////////////////////////
+// Mixins de Btn //////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------
+//
+
+pagination-size(padding-vertical, padding-horizontal, font-size, border-radius)
+	> span
+		> a
+			padding padding-vertical padding-horizontal
+			font-size font-size
+
+		&:first-child
+			> a
+				border-left-radius(border-radius)
+
+		&:last-child
+			> a
+				border-right-radius(border-radius)
+
+	//El elemento que esta activo:
+	> span.current
+		padding padding-vertical padding-horizontal
+		font-size font-size
+
+		&:first-child
+			border-left-radius($border-radius)
+
+		//Puede ser un numero o el signo >>
+		&:last-child
+			border-right-radius($border-radius)
+
+// --------------------------------------------------
+
+//clase de pagination que viene por defecto en el KNPPaginationBundle
+.pagination
+	display inline-block
+	vertical-align middle
+	padding 10px 0px 10px 10px
+	margin 0px;//$line-height-computed 0
+	//border-radius $border-radius
+	font-family $font-family-form
+
+	> span
+		display inline // Remove list-style and block-level defaults
+		> a
+			position relative
+			float left // Collapse white-space
+			padding $padding-vertical $padding-horizontal
+			line-height $line-height
+			text-decoration none
+			color $green-dark
+			background-color $pagination-background-color
+			border 1px solid $pagination-border-color
+			margin-left -1px
+
+		//Puede ser un numero o el signo <<
+		&:first-child
+			> a
+				margin-left 0
+				border-left-radius($border-radius-xs)
+
+		//Puede ser un numero o el signo >>
+		&:last-child
+			> a
+				border-right-radius($border-radius-xs)
+
+	> span
+		> a
+			&:hover,
+			&:focus
+				background-color $pagination-hover-background-color
+
+	//Si es el elemento actual de page:
+	//Solo tiene el elemento SPAN!!
+	> span.current
+		position relative
+		float left // Collapse white-space
+		padding $padding-vertical $padding-horizontal
+		line-height $line-height
+		text-decoration none
+		color $pagination-active-color
+		background-color $pagination-active-background-color
+		border 1px solid $pagination-active-background-color
+		margin-left -1px
+		z-index 2
+		cursor default
+
+
+		//Puede ser un numero o el signo <<
+		&:first-child
+			margin-left 0
+			border-left-radius($border-radius-xs)
+
+		//Puede ser un numero o el signo >>
+		&:last-child
+			border-right-radius($border-radius-xs)
+
+
+
+.pagination-count,
+.pagination-limit
+	display inline-block
+	vertical-align middle
+	color $text-color
+	font-weight normal
+	padding 10px 5px 10px 10px
+	margin 0px
+
+.pagination-limit
+	width 80px
+	padding-left 2px
+	margin-left 15px
+
+	> input
+		padding 6px 6px
+		text-align center
+
+	+ div
+		padding-left 2px
+
+
+// Sizing
+// --------------------------------------------------
+
+// Large
+.pagination-lg
+	pagination-size($padding-lg-vertical, $padding-lg-horizontal, $font-size-lg, $border-radius-sm)
+
+
+// Small
+.pagination-sm
+	pagination-size($padding-sm-vertical, $padding-sm-horizontal, $font-size-sm, $border-radius-xs)
+
+

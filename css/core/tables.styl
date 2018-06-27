@@ -1,0 +1,349 @@
+//
+// Table
+// --------------------------------------------------
+
+//
+// --------------------------------------------------
+////////////////////////////////////////////////////////////////////////
+// Variables de Table /////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------
+//
+
+//Padding:
+$table-cell-padding =				5px
+$table-cell-padding-extended =		8px
+
+//Colores:
+$table-background-color =			transparent
+$table-background-color-zebra =		lighten($gray-lighter, 50%)
+$table-background-color-hover =		lighten($green-lighter, 80%)
+$table-background-active =			$table-background-color-hover
+
+//Bordes:
+$table-border-color =				$gray-light
+
+// // -------------------------
+
+
+
+
+// Mixin: Genera una variante de la fila por cada estado (state, background, border)
+
+//
+// --------------------------------------------------
+////////////////////////////////////////////////////////////////////////
+// Mixins de table ////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------
+//
+
+// Genera una variante de border y color a la fila o celda por cada estado que le pase:
+
+table-row-variant(state, background, border)
+	.table
+		thead,
+		tbody,
+		tfoot
+			> tr
+				> td,
+				> th
+					//Cambio en la celda
+					&.{state}
+						background-color background
+						//border-color border
+
+				//Cambio en la fila
+				&.{state}
+					> td,
+					> th
+						background-color background
+						//border-color border
+
+	// con la clase "hover" ...
+	.table-hover
+		> tbody
+			> tr
+				> td,
+				> th
+					//Cambio en la celda
+					&.{state}:hover
+						background-color darken(background, 5%)
+						//border-color darken(border, 5%)
+
+				//Cambio en la fila
+				&.{state}:hover
+					> td,
+					> th
+						background-color darken(background, 5%)
+						//border-color darken(border, 5%)
+
+// -------------------------
+
+
+
+
+
+//
+// --------------------------------------------------
+////////////////////////////////////////////////////////////////////////
+// Estilos de Table /////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------
+//
+
+
+
+table
+	max-width 100%
+	background-color $table-background-color
+	font-weight 300
+
+	th
+		text-align left
+		a
+			color $text-color;// $green-light
+
+			&:hover
+				color $green-light
+				text-decoration none
+
+	td
+		&[class="icon"]
+			width 37px
+			text-align center
+			padding-left 0px
+			padding-right 0px
+
+			//Para el icono de seguimiento de la lista de usuarios
+			> a
+				//Para mostrar la mano cuando solo tengo un icono dentro del ancor
+				cursor pointer
+
+		a
+			color $green-darker
+
+			&:hover
+				color $green-darker
+				text-decoration none
+
+
+
+
+// Baseline styles for Tables
+//
+// añade los estilos bases a la table
+.table
+	width 100%
+	margin-bottom $line-height-computed
+	margin 0 auto
+	font-family $font-family-header
+	font-weight 100
+
+	//El titulo de la tabla (top, bottom)
+	caption
+		caption-side left
+		text-align left
+		font-size 2em
+		letter-spacing -1px
+		color $green
+		font-weight bold //bolder|lighter|100|200|300|...|900
+		text-transform uppercase
+		margin-bottom .1em
+
+	//Cells
+
+	tbody,
+	tfoot
+		> tr
+			> td
+				padding $table-cell-padding
+				line-height $line-height
+				vertical-align middle
+				border-top 1px solid $table-border-color
+
+
+	thead
+		font-family $font-family-form
+		font-weight 100
+		color $text-color
+		text-transform uppercase
+
+		> tr:first-child
+			border-top 3px solid $green
+		> tr:last-child
+			border-bottom 1px solid $table-border-color
+
+			> th
+				vertical-align bottom
+				border-bottom 0px solid $table-border-color
+
+
+	tfoot
+		font-weight 300
+		color $text-color
+		// color $green-light
+		// background-color lighten($green-lighter, 80%)
+
+		> tr:first-child
+			> td
+				border-top 3px solid $table-border-color
+
+		//Texto descripcion de la ultima fila del tfoot
+		> tr:last-child
+			> td
+				border-top 1px solid $table-border-color
+
+
+	//Eliminamos del primer tr del thead el borde superior
+	caption + thead,
+	colgroup + thead,
+	thead:first-child
+		tr:first-child
+			th,
+			td
+				border-top 0
+
+	tbody + tbody
+		border-top 3px solid $table-border-color
+
+	.table
+		background-color $body-background-color
+
+	//TR de Notes del Usuario
+	.notes
+		div
+			display inline-block
+			vertical-align middle
+			margin-right 8px
+			a
+				display block
+				width 30px
+				&:first-of-type
+					margin-bottom 6px
+
+			&.data-ads
+				display block
+				font-size 14px
+				font-weight 100
+				letter-spacing 0px
+				margin-left 50px
+				margin-bottom 5px
+				&.hide
+					display none
+
+
+		textarea
+			display inline-block
+			vertical-align middle
+			height 60px !important
+			max-height 60px
+			font-size 16px
+			width 97.5% !important
+			margin 0px 5px 0px 0px
+
+
+
+
+
+// Padding Version
+//
+// add padding a las Celdas:
+.table-padding
+	thead,
+	tbody,
+	tfoot
+		> tr
+			> th,
+			> td
+				padding $table-cell-padding-extended
+
+// Border-Outsite Version
+//
+// add border alrededor de la tabla:
+.table-border-outsite
+	////Alternativa para mostrar un border-radius con border-collapse: "collapse"
+	// border-radius 0 0 10px 10px
+	// border-style hidden; // hide standard table (collapsed) border
+	// box-shadow 0 0 0 1px $table-border-color; // this draws the table border
+
+	thead,
+	tbody,
+	tfoot
+		border 1px solid $table-border-color
+
+	tfoot
+		> tr:last-child
+			//Quitamos los bordes a la ultima fila de tfoot
+			//border-right hidden
+			//border-bottom hidden
+			//border-left hidden;//6px solid $table-border-color
+
+
+
+// Border-Insite Version
+//
+// add border dentro de la tabla:
+.table-border-insite
+	tbody
+		> tr
+			> td
+				//Border para las celdas
+				border 1px solid $table-border-color
+
+
+// Zebra version
+//
+// Default zebra styles (alternating gray and transparent backgrounds)
+.table-zebra
+	tbody
+		//filas impares(odd), filas pares(even)
+		> tr:nth-child(odd),
+		> tr:nth-child(even)
+			> td,
+			> th
+				background-color $table-background-color-zebra
+
+// Hover version
+//
+// Colocado aqui ya que se aplica despues del efecto de Zebra.
+.table-hover
+	tbody
+		> tr:hover
+			> td,
+			> th
+				background-color $table-background-color-hover
+
+
+
+
+//
+// No mover de aqui!!
+table-row-variant(success, $state-success-background-color, $state-success-border-color);
+table-row-variant(danger, $state-danger-background-color, $state-danger-border-color);
+table-row-variant(warning, $state-warning-background-color, $state-warning-border-color);
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+//Hay que poner en el contenedor de la tabla la clase: 'table-responsive'
+//////////////////////////////////////////////////////////////////////////////
+.table-responsive
+	margin-bottom 15px
+	overflow-y hidden
+	overflow-x scroll
+
+	//Aprieta el espacio y le da un color de fondo
+	> .table
+		margin-bottom 0
+		background-color #fff
+
+		// Asegura que el contenido se ajuste
+		> thead,
+		> tbody,
+		> tfoot
+			> tr
+				> td,
+				> th
+					white-space nowrap // no rompe la linea, hace que el texto continue...
+

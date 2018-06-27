@@ -1,0 +1,146 @@
+//
+// Alerts (warning, danger, info, success)
+// --------------------------------------------------
+//
+// Tiene un clouser para el Btn de Cerrar con JQuery:
+// <div class="alert alert-info">
+// 		<span class="icon-awesome-info-circle text-info"></span>
+// 		<p>Su direccion se actualizo correctamente!</p>
+// 		<a href="#" target="_self" title="Cerrar" class="close">
+// 			<span class="icon-awesome-times text-info"></span>
+// 		</a>
+// </div>
+
+// Alerts
+// -------------------------
+$alert-padding =						15px
+$alert-border-radius =					$border-radius-sm
+$alert-link-font-weight =				bold
+
+$alert-success-background-color =		$state-success-background-color
+$alert-success-text-color =				$state-success-text-color
+$alert-success-border-color =			$state-success-border-color
+
+$alert-info-background-color =			$state-info-background-color
+$alert-info-text-color =				$state-info-text-color
+$alert-info-border-color =				$state-info-border-color
+
+$alert-warning-background-color =		$state-warning-background-color
+$alert-warning-text-color =				$state-warning-text-color
+$alert-warning-border-color =			$state-warning-border-color
+
+$alert-danger-background-color =		$state-danger-background-color
+$alert-danger-text-color =				$state-danger-text-color
+$alert-danger-border-color =			$state-danger-border-color
+//
+// --------------------------------------------------
+////////////////////////////////////////////////////////////////////////
+// Mixins de Alert //////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------
+//
+alert-variant(background, border, text-color)
+	background-color background
+	border-color border
+	color text-color
+
+	hr
+		border-top-color darken(border, 5%)
+
+	.alert-link
+		color darken(text-color, 10%)
+
+
+
+// Base styles
+// -------------------------
+
+.alert
+	position relative
+	//padding ($alert-padding / 2)
+	padding 10px 20px
+	margin-bottom ($line-height-computed / 2)
+	border 1px solid transparent
+	border-radius $alert-border-radius
+	display flex
+	justify-content space-between
+	align-items center
+	z-index 20000
+
+	// Improve alignment and spacing of inner content
+	> p,
+	> ul
+		margin-bottom 0
+		padding-left 20px
+		flex-grow 1 //Para que el "p" crezca todo lo q pueda.
+
+	> p
+		font-family $font-family-form
+		font-size .9em
+		letter-spacing 1px
+		text-transform uppercase
+
+	> p + p
+		margin-top 5px
+
+	span[class^='icon-']
+		font-size 1.3em
+
+	a.close
+		padding-left 20px
+		transition all .4s ease-in-out
+		opacity(0.5)
+
+		span[class^='icon-']
+			font-size 1.1em
+
+
+		&:hover
+			opacity 1.0
+
+
+
+
+//El div.alert que muestra el mensaje de cookiesPolicy
+.alert[data-alert-cookies]
+	position fixed
+	left 5px
+	bottom 5px
+	right 5px
+	margin-bottom 0px
+
+	p
+		font-size .6em
+
+
+
+//El div.alert que muestra el mensaje de notificaciones
+.alert[data-alert-notification]
+	display none
+	position fixed
+	top 120px
+	right 5px
+	width 300px
+	padding 20px
+
+
+	p
+		font-size .9em
+
+
+
+// Alternate styles
+//
+// Generate contextual modifier classes for colorizing the alert.
+
+.alert-success
+	alert-variant($alert-success-background-color, $alert-success-border-color, $alert-success-text-color)
+
+.alert-info
+	alert-variant($alert-info-background-color, $alert-info-border-color, $alert-info-text-color)
+
+.alert-warning
+	alert-variant($alert-warning-background-color, $alert-warning-border-color, $alert-warning-text-color)
+
+.alert-danger
+	alert-variant($alert-danger-background-color, $alert-danger-border-color, $alert-danger-text-color)

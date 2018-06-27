@@ -1,0 +1,100 @@
+//
+// --------------------------------------------------
+////////////////////////////////////////////////////////////////////////
+// Typography //////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------
+//
+// Typography para Headers (Display)
+
+
+// Text
+// --------------------------------------------------
+$text-color = $gray-darker
+
+
+// Links
+// --------------------------------------------------
+$link-color 		= $green;//$blue
+$link-hover-color 	= $green-dark;//$blue-dark
+
+
+// Typography
+// --------------------------------------------------
+$font-family-header	= 'Oswald', sans-serif; //[h1-h6]
+$font-family-text 	= 'Yanone+Kaffeesatz', sans-serif; //Texto general
+$font-family-code	= 'Ubuntu Mono', monospace; //Para el codigo <code>
+
+
+// FONT-SIZE
+// --------------------------------------------------
+// xs (ExtraSmall) | sm (Small) | 'nada para el default' | lg (large)
+// ceil() redondea al alza
+// floor() redondea al suelo
+$font-size    = 21px; //Fuente base del proyecto!
+$font-size-lg = ceil($font-size * 1.15); //24px
+$font-size-sm = ceil($font-size * 0.8); //17px
+$font-size-xs = floor($font-size * 0.7); //15px
+
+
+// LINE-HEIGHT - (interlineado)
+// --------------------------------------------------
+// La propiedad line-height establece la altura de cada línea que forma el
+// contenido de texto de un elemento, por lo que se emplea para controlar el
+// interlineado del texto.
+// El uso de line-height es imprescindible cuando se quiere facilitar la lectura
+// de los contenidos de una página.
+// Si el valor de line-height es mayor que el tamaño de letra del texto, los
+// navegadores añaden un espacio de separación del mismo tamaño por encima y por
+// debajo del texto.
+// En los elementos de bloque, la propiedad line-height indica la altura mínima
+// de sus contenidos de texto.
+// En los elementos en línea, line-height indica directamente la altura de la caja
+// que forma ese elemento (salvo las imágenes, cuya altura se determina mediante
+// la propiedad height).
+// En funcion del tamaño de fuente, podemos poner mas o menos interliniado.
+$line-height-xl =			1.6//1.8
+$line-height-lg =			1.5//1.8
+$line-height =				1.4//1.5
+$line-height-sm =			1.3//1.4
+$line-height-xs =			1.2//1.2
+$line-height-computed =		floor($font-size * $line-height); // 24px
+
+
+// VALUE-COMPUTED - (valor calculado)
+// --------------------------------------------------
+// El valor computed value de una propiedad CSS es computado a partir de valores especificos
+// El cálculo necesario para el "Computed value" de una propiedad o "Valor Calculado", normalmente
+// implica convertir valores relativos (como los expresados en unidades 'em' o en porcentajes) a valores absolutos.
+// Para algunas propiedades (aquellas con porcentajes relativos a algo que necesita un formato para ser determinados,
+// tales como width, margin-right, text-indent, y top) los valores especificados en porcentajes se
+// tornan valores computados.
+// Ademas,los números especificados sin unidades en la propiedad line-height se convierten en
+// valores computados, según se especifica.
+// Estos valores relativos que quedan tras realizar el cómputo, se hacen absolutos cuando se determina
+// el used value.
+$headings-font-family =		$font-family-header
+$headings-font-weight =		normal
+$headings-line-height =		1
+
+
+// PADDING
+// Es el margen interior de los elementos
+$padding-lg-vertical =		10px
+$padding-vertical =			8px
+$padding-sm-vertical =		6px
+$padding-xs-vertical =		4px
+
+$padding-lg-horizontal =	16px
+$padding-horizontal =		12px
+$padding-sm-horizontal =	8px
+$padding-xs-horizontal =	5px
+
+
+// BORDER-RADIUS
+$border-radius-lg =			6px
+$border-radius =			5px
+$border-radius-sm =			4px
+$border-radius-xs =			2px
+
+

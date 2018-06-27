@@ -1,0 +1,125 @@
+// Iconography
+// -------------------------
+
+$font-icon-path = "core/fonticons/"; //Ruta desde el bootstrap.styl
+
+//Familias de Iconos:
+//@import "glyphicons"; // Boostrap
+//@import "herbalife"; // Herbalife FrameWork
+@import "awesome"; // AwesomeFont
+//@import "ccf"; // ccf
+
+
+////////////////////////////////////////////////////////////////////////
+////////////CLASES ESPECIALES PARA UTILIZAR CON LOS ICONS ///////////////
+////////////////////////////////////////////////////////////////////////
+
+//Con esta clase el 'icon' gira sobre si mismo:
+.icon-spin
+	display inline-block
+	animation spin 2s infinite linear
+
+.icon-pulse
+	display inline-block
+	animation: spin 1s infinite steps(8)
+
+@keyframes spin
+	0%
+		transform rotate(0deg)
+	100%
+		transform rotate(359deg)
+
+
+//Con esta clase el 'icon' parpadea:
+.icon-parpadeo
+	display inline-block
+	animation parpadeo 1s infinite linear
+
+@keyframes parpadeo
+	0%
+		opacity 1
+
+	50%
+		opacity 0.3
+
+	100%
+		opacity 1
+
+//Banner de producto y negocio
+.animation-banner
+	display inline-block
+	animation banner-opacity 3s infinite linear
+
+@keyframes banner-opacity
+	0%
+		opacity 1
+
+	50%
+		opacity .3
+
+
+
+
+
+//Hacer rotar al icono cada 90 grados:
+.rotate-45
+	transform rotate(45deg)
+
+.rotate-90
+	transform rotate(90deg)
+
+.rotate-180
+	display inline-block
+	transform rotate(180deg)
+
+.rotate-270
+	display inline-block
+	transform rotate(270deg)
+
+//Flip en el eje Y
+.rotateY-180
+	display inline-block
+	transform rotateY(180deg)
+
+
+//Flip en el eje X
+.rotateX-180
+	display inline-block
+	transform rotateX(180deg)
+
+
+//Apilacion de iconos:
+//Es el contenedor
+.icon-stack
+	position relative
+	display inline-block
+	width 2em
+	height 2em
+	line-height 2em
+	vertical-align middle
+
+	.icon-stack-1x,
+	.icon-stack-2x
+		position absolute
+		left 0
+		width 100%
+		text-align center
+
+	//Tamaño de icono por defecto
+	.icon-stack-1x
+		line-height inherit
+
+	//Tamaño 2 veces mas grande del icono:
+	.icon-stack-2x
+		font-size @line-height
+
+
+
+
+
+
+
+
+
+
+

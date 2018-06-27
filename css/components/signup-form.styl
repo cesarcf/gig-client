@@ -1,0 +1,53 @@
+//////////////////////////////////////////
+////// SIGNUP FORM //////////////////////
+//////////////////////////////////////////
+div.signup
+	display flex
+	flex-direction column
+	align-items center
+	height 400px
+	margin-top 65px
+	@media $media-screen-min-tablet
+		justify-content center
+
+
+	h2
+		font-size 1.5em
+		@media $media-screen-min-tablet
+			margin-top 0px
+
+	form
+		position relative
+		display flex
+		flex-direction column
+		align-items center
+		width 300px
+
+		div
+			position relative
+			width 100%
+
+			input
+				text-align center
+				width 100%
+				margin 0px 0px 5px 0px
+				&.error
+					border 1px solid red
+
+		div.terminos
+			display flex
+			justify-content center
+			align-items center
+			margin 5px 0px 10px 0px
+
+			input
+				width auto
+				margin 0px 5px 0px 0px
+			label
+				text-transform none
+				font-size .7em
+
+		button
+			width 100%
+
+

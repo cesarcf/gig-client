@@ -1,0 +1,120 @@
+//////////////////////////////////////////
+////// ADDRESS BOOK //////////////////////
+//////////////////////////////////////////
+div.address-book
+	margin-top 65px
+	display flex
+	flex-direction column
+	align-items center
+	height auto
+	max-width 900px
+	min-height 500px
+	margin-right auto
+	margin-left auto
+
+	div.contacts
+		padding 10px
+		box-shadow 0px 0px 1px 1px lighten($green-lighter, 50%)
+		background-color #fff
+		border-radius 5px
+		width 90%
+		max-height 200px
+		overflow-y scroll
+		margin 0px 10px 20px 10px
+
+		div.void
+			display flex
+			justify-content center
+			align-items center
+			p
+				margin 0px
+
+		div.contact
+			display flex
+			justify-content space-between
+			align-items center
+			width 100%
+			cursor default
+			margin 0px
+			border-bottom 1px solid $green
+			&:last-child
+				border-bottom none
+				margin 0px
+			&:hover
+				background-color lighten($green, 90%)
+				border-radius 5px
+
+			.contact-info
+				width auto
+				width @width
+				overflow-x auto
+				white-space nowrap
+
+				p
+					font-size 0.6em
+					margin 0px
+					padding 10px
+					@media $media-screen-min-tablet
+						font-size 0.8em
+
+			.contact-btns
+				display flex
+				justify-content flex-end
+				align-items center
+				margin-left 5px
+
+				a
+					flex-shrink 0
+					padding 5px
+					span
+						font-size 1em
+						cursor pointer
+						&.icon-awesome-pencil-square-o
+							position relative
+							top 1px
+
+	div.btns-add
+		margin 0px 0px 20px 0px
+
+
+
+	.edit-address-book
+		padding 10px
+		box-shadow 0px 0px 1px 1px lighten($green-lighter, 50%)
+		background-color #fff
+		border-radius 5px
+		width 90%
+		margin 0px 10px 20px 10px
+
+		h3
+			margin 5px 0px 10px 0px
+			text-align center
+			font-size 1.4em
+
+		form
+			position relative
+			display flex
+			flex-direction column
+			align-items center
+			width 100%
+
+			div
+				display flex
+				justify-content center
+				align-items center
+				position relative
+				width 100%
+
+				input
+					width 100%
+					margin 0px 0px 5px 0px
+					&.error
+						border 1px solid red
+
+				select
+					margin 0px 0px 5px 0px
+					&.error
+						border 1px solid red
+
+			button
+				width 100%

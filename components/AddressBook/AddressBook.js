@@ -1,41 +1,22 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { Link } from 'react-router-dom'
+import { Route, Link, Switch, withRouter } from 'react-router-dom'
 import { loadAddressBook, deleteContact } from '../../actions/addressBook'
 import EditAddressBook from './EditAddressBook'
 
 
 class AddressBook extends React.Component {
-	state = {
-		currentContact: null
-	}
-
-
-	handleEdit = (event, _id=null) => {
-		event.preventDefault()
-		const { addressBook } = this.props
-		const currentContact = addressBook.find(contact => contact._id == _id)
-		this.setState({ currentContact })
-	}
 
 	handleDelete = (event, _id=null) => {
 		event.preventDefault()
 		this.props.deleteContact(_id)
 	}
 
-	handleNew = (event) => {
-		event.preventDefault()
-		this.setState({ currentContact: null })
-	}
-
-
-	render(){
-		const { addressBook, match } = this.props
+	renderListContact = (addressBook) => {
+		const { match } = this.props
 		return (
 			<Fragment>
-			<div className='address-book'>
-				<h2>Address Book</h2>
 				<p>This is your current list of contacts:</p>
 				<div className='contacts'>
 				{ addressBook.length == 0
@@ -53,7 +34,7 @@ class AddressBook extends React.Component {
 										<p>{`${country} - ${firstName} ${lastName} - ${email}`}</p>
 									</div>
 									<div className='contact-btns'>
-										<Link to='' onClick={ (event) => this.handleEdit(event, _id) }>
+										<Link to={{ pathname:`${match.url}/edit`, state:{ _id }}}>
 											<span className="icon-awesome-pencil-square-o"></span>
 										</Link>
 										<Link to='' onClick={ (event) => this.handleDelete(event, _id) }>
@@ -67,19 +48,36 @@ class AddressBook extends React.Component {
 				}
 				</div>
 				<div className='btns-add'>
-					<Link to='' onClick={ this.handleNew }>
+					<Link to={{ pathname:`${match.url}/edit`, state:{ _id:undefined }}}>
 						Create a new Contact:  <span className="icon-awesome-plus-circle"></span>
 					</Link>
 				</div>
-				<EditAddressBook {...this.state.currentContact} />
-
-			</div>
 			</Fragment>
 		)
 	}
 
+
+	render(){
+		const { addressBook, match } = this.props
+		return (
+			<Fragment>
+				<div className='address-book'>
+					<h2>Address Book</h2>
+					<Switch>
+						<Route exact path={`${match.url}`} render={() => this.renderListContact(addressBook) }/>
+						<Route path={`${match.url}/:edit`} render={(props) => <EditAddressBook {...props} addressBook={addressBook} /> }/>
+					</Switch>
+				</div>
+			</Fragment>
+		)
+	}
+
+
 	componentDidMount(){
-		this.props.loadAddressBook()
+		/* Solo llamamos a la API una vez */
+		if (this.props.addressBook === undefined || this.props.addressBook.length == 0) {
+			this.props.loadAddressBook()
+		}
 	}
 }
 
@@ -91,5 +89,6 @@ const mapStateToProps = ({ addressBook }) => {
 
 
 export default compose(
-	connect(mapStateToProps, { loadAddressBook, deleteContact })
+	connect(mapStateToProps, { loadAddressBook, deleteContact }),
+	withRouter
 )(AddressBook)

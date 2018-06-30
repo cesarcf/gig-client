@@ -1,68 +1,85 @@
-import React, { Component, Fragment } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { withFormik, Form, Field } from 'formik'
+import { Formik, Form, Field } from 'formik'
 import { updateContact, addContact } from '../../actions/addressBook'
 import classNames from 'classnames'
+import InputField from '../common/formik/InputField'
+import SelectField from '../common/formik/SelectField'
+import Button from '../common/Button'
+import requireAuth from '../hoc/requireAuth'
 import * as yup from 'yup'
 const countries = require('country-list')()
 const paises = countries.getNames()
 
 
-class EditAddressBook extends Component {
+
+class EditAddressBook extends PureComponent {
 
 	render(){
-		const { dirty, handleChange, errors, touched, isSubmitting } = this.props
+		if(!this.props.authenticated){
+			return <div />
+		}
+
+		const { addressBook, location, updateContact, addContact } = this.props
+		const contact = (location.state._id == undefined)
+			?	{_id:null, firstName:'', lastName:'', email:'', country:''}
+			: addressBook.find(contact => contact._id == location.state._id)
 
 		return (
+			<Fragment>
 			<div className='edit-address-book'>
 			<h3>Create or Update a Contact:</h3>
-			<Form>
-				<div>
-				<Field type='text' name='firstName' placeholder='FirstName' className={classNames('form-control', touched.firstName && errors.firstName && 'error')} />
-				</div>
-				{
-					touched.firstName && errors.firstName &&
-					<div className='field-error'>
-						<span className='error'>{errors.firstName}</span>
-					</div>
-				}
-				<div>
-				<Field type='text' name='lastName' placeholder='LastName' className={classNames('form-control', touched.lastName && errors.lastName && 'error')}  />
-				</div>
-				{
-					touched.lastName && errors.lastName &&
-					<div className='field-error'>
-						<span className='error'>{errors.lastName}</span>
-					</div>
-				}
-				<div>
-				<Field type='text' name='email' placeholder='Email' className={classNames('form-control', touched.email && errors.email && 'error')} />
-				</div>
-				{
-					touched.email && errors.email &&
-					<div className='field-error'>
-						<span className='error'>{errors.email}</span>
-					</div>
-				}
-				<div>
-				<Field component='select' name='country' className={classNames('form-control', touched.country && errors.country && 'error')}>
-					<option value=''>Select your Country...</option>
-					{paises.map((country, index) => {
-						return <option key={index} value={country}>{country}</option>
-					})}
-				</Field>
-				</div>
-				{
-					touched.country && errors.country &&
-					<div className='field-error'>
-						<span className='error'>{errors.country}</span>
-					</div>
-				}
-				<button className='btn-primary btn-block' type='submit' disabled={!dirty || isSubmitting}>Save Contact!</button>
-			</Form>
+
+			<Formik
+				enableReinitialize={true}
+
+				initialValues={{
+					_id: contact._id || null,
+					firstName: contact.firstName || '',
+					lastName: contact.lastName || '',
+					email: contact.email || '',
+					country: contact.country || ''
+				}}
+
+				validationSchema={yup.object().shape({
+					firstName: yup.string('Only Text is allowed!').required('The FirstName is required!'),
+					lastName: yup.string('Only Text is allowed!').required('The LastName is required!'),
+					email: yup.string().email('The Email is invalid!').required('The Email is required!'),
+					country: yup.string().required('The Country is required!')
+				})}
+
+				onSubmit={(values, {resetForm, setErrors, setSubmitting, setTouched}) => {
+					if(values._id == null){
+						addContact(values) //action-creator
+						resetForm()
+					}else {
+						updateContact(values) //action-creator
+					}
+
+					setSubmitting(false)
+					this.props.history.push('/address-book')
+				}}
+
+				render={({ dirty, isSubmitting }) => (
+					<Form>
+						<Field name='firstName' component={InputField} placeholder='FirstName' />
+						<Field name='lastName' component={InputField} placeholder='LastName' />
+						<Field name='email' component={InputField} placeholder='Email' />
+						<Field name='country' component={SelectField}>
+							<option value=''>Select your Country...</option>
+							{paises.map((country, index) => {
+								return <option key={index} value={country}>{country}</option>
+							})}
+						</Field>
+						<Button disabled={!dirty || isSubmitting}>Save Contact!</Button>
+						<button type='button' className='btn btn-block btn-link' onClick={ () => this.props.history.goBack() }>Go Back!</button>
+					</Form>
+				)}
+			/>{/* Fin de Formik */}
 
 			</div>
+			</Fragment>
 		)
 	}
 
@@ -71,36 +88,5 @@ class EditAddressBook extends Component {
 
 
 export default compose(
-	connect(null, {updateContact, addContact}),
-	withFormik({
-		displayName: 'upsertForm',
-		enableReinitialize: true,
-		mapPropsToValues({ _id, firstName, lastName, email, country }){
-			return {
-				_id: _id || null,
-				firstName: firstName || '',
-				lastName: lastName || '',
-				email: email || '',
-				country: country || ''
-			}
-		},
-
-		validationSchema: yup.object().shape({
-			firstName: yup.string('Only Text is allowed!').required('The FirstName is required!'),
-			lastName: yup.string('Only Text is allowed!').required('The LastName is required!'),
-			email: yup.string().email().required('The Email is required!'),
-			country: yup.string().required('The Country is required!')
-		}),
-
-		handleSubmit(values, { props, resetForm, setErrors, setSubmitting}){
-			if(values._id == null){
-				props.addContact(values)
-				resetForm()
-			}else {
-				props.updateContact(values)
-			}
-			setSubmitting(false)
-		}
-
-	})
-)(EditAddressBook)
+	connect(null, {updateContact, addContact})
+)(requireAuth(EditAddressBook))

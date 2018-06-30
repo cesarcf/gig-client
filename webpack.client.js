@@ -29,12 +29,13 @@ module.exports = env => {
 
 		output: {
 			filename: IS_DEVELOPMENT ? 'js/[name].js' : 'js/[name].[hash].js',
-			path: path.resolve(__dirname, 'build')
+			path: path.resolve(__dirname, 'build'),
+			publicPath: '/'
 		},
 
 		devServer: {
-			contentBase: [path.join(__dirname, "build")], //desde donde servimos los archivos.
-			//publicPath: '', //It is recommended that devServer.publicPath is the same as output.publicPath
+			contentBase: [path.resolve(__dirname, 'build')], //desde donde servimos los archivos.
+			publicPath: '/', //It is recommended that devServer.publicPath is the same as output.publicPath
 			host: 'localhost',
 			port: 3000,
 			hot: true,
